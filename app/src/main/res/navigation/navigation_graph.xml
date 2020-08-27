@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph"
+    app:startDestination="@id/specialtyRosterFragment">
+
+    <fragment
+        android:id="@+id/specialtyRosterFragment"
+        android:name="net.grieverc.contactlog.ui.specialty.SpecialtyRosterFragment"
+        android:label="SpecialtyRosterFragment" >
+        <action
+            android:id="@+id/action_specialtyRosterFragment_to_workerRosterFragment"
+            app:destination="@id/workerRosterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workerRosterFragment"
+        android:name="net.grieverc.contactlog.ui.worker.WorkerRosterFragment"
+        android:label="WorkerRosterFragment">
+        <argument
+            android:name="specialtyId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

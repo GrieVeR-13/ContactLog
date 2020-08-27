@@ -1,19 +1,28 @@
-package net.grieverc.contactlog.ui
+package net.grieverc.contactlog.ui.specialty
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import net.grieverc.contactlog.databinding.SpecialtyRowBinding
-import net.grieverc.contactlog.repo.SpecialtyModel
+import net.grieverc.contactlog.repo.specialty.SpecialtyModel
 
 class SpecialtyListAdapter(
-    val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val onRowClick: (SpecialtyModel) -> Unit
 ) : ListAdapter<SpecialtyModel, SpecialtyRowHolder>(
     SpecialtyListAdapterDiff
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialtyRowHolder {
-        return SpecialtyRowHolder(SpecialtyRowBinding.inflate(inflater, parent, false))
+        return SpecialtyRowHolder(
+            SpecialtyRowBinding.inflate(
+                inflater,
+                parent,
+                false
+            )
+            ,
+            onRowClick
+        )
     }
 
     override fun onBindViewHolder(holder: SpecialtyRowHolder, position: Int) {

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Contact Log</string>
+    <string name="insert_sample_data">Insert Sample Data</string>
+    <string name="delete_all">Delete All</string>
+    <string name="surname">Surname</string>
+    <string name="first_name">First Name</string>
+    <string name="age">Age</string>
 </resources>
