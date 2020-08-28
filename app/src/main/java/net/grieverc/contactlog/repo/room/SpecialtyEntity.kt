@@ -1,7 +1,7 @@
-package net.grieverc.contactlog.repo.specialty
+package net.grieverc.contactlog.repo.room
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import net.grieverc.contactlog.repo.SpecialtyModel
 import java.util.*
 
 const val C_TableName_Specialty = "Specialty"
@@ -26,19 +26,8 @@ data class SpecialtyEntity(
             name,
             desciption
         )
-
-    @Dao
-    interface Store {
-        @Query("SELECT * FROM $C_TableName_Specialty")
-        fun loadAll(): Flow<List<SpecialtyEntity>>
-
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
-        fun insert(vararg entity: SpecialtyEntity)
-
-        @Delete
-        fun delete(vararg entity: SpecialtyEntity)
-    }
 }
 
 fun SpecialtyModel.toEntity() =
     SpecialtyEntity(this)
+

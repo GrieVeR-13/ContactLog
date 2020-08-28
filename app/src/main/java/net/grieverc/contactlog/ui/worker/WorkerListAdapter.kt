@@ -4,17 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import net.grieverc.contactlog.databinding.WorkerkRowBinding
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
+import net.grieverc.contactlog.databinding.WorkerRowBinding
+import net.grieverc.contactlog.repo.WorkerModel
 
 class WorkerListAdapter(
-    val inflater: LayoutInflater
-) : ListAdapter<SpecialtyModel, WorkerRowHolder>(
+    private val inflater: LayoutInflater,
+    private val onRowClick: (WorkerModel) -> Unit
+) : ListAdapter<WorkerModel, WorkerRowHolder>(
     SpecialtyListAdapterDiff
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkerRowHolder {
         return WorkerRowHolder(
-            WorkerkRowBinding.inflate(inflater, parent, false))
+            WorkerRowBinding.inflate(inflater, parent, false),
+            onRowClick
+        )
     }
 
     override fun onBindViewHolder(holder: WorkerRowHolder, position: Int) {
@@ -22,12 +25,13 @@ class WorkerListAdapter(
     }
 }
 
-private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<SpecialtyModel>() {
-    override fun areItemsTheSame(oldItem: SpecialtyModel, newItem: SpecialtyModel): Boolean {
+private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<WorkerModel>() {
+    override fun areItemsTheSame(oldItem: WorkerModel, newItem: WorkerModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: SpecialtyModel, newItem: SpecialtyModel): Boolean {
-        return oldItem.description == newItem.description
+    override fun areContentsTheSame(oldItem: WorkerModel, newItem: WorkerModel): Boolean {
+        return oldItem.firstName == newItem.firstName &&
+                oldItem.surname == oldItem.surname
     }
 }

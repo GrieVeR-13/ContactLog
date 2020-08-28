@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
     app:startDestination="@id/specialtyRosterFragment">
 
     <fragment
         android:id="@+id/specialtyRosterFragment"
         android:name="net.grieverc.contactlog.ui.specialty.SpecialtyRosterFragment"
-        android:label="SpecialtyRosterFragment" >
+        android:label="Specialty">
         <action
             android:id="@+id/action_specialtyRosterFragment_to_workerRosterFragment"
             app:destination="@id/workerRosterFragment" />
@@ -14,9 +15,21 @@
     <fragment
         android:id="@+id/workerRosterFragment"
         android:name="net.grieverc.contactlog.ui.worker.WorkerRosterFragment"
-        android:label="WorkerRosterFragment">
+        android:label="Staff">
         <argument
             android:name="specialtyId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_workerRosterFragment_to_workerDetailsFragment"
+            app:destination="@id/workerDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workerDetailsFragment"
+        android:name="net.grieverc.contactlog.ui.worker.WorkerDetailsFragment"
+        android:label="Employee">
+        <argument
+            android:name="workerId"
             app:argType="string"
             app:nullable="true" />
     </fragment>

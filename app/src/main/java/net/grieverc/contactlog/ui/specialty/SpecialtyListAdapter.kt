@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import net.grieverc.contactlog.databinding.SpecialtyRowBinding
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
+import net.grieverc.contactlog.repo.SpecialtyModel
 
 class SpecialtyListAdapter(
     private val inflater: LayoutInflater,

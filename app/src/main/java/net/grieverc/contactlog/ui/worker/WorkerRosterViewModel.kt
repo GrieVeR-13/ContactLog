@@ -1,45 +1,29 @@
 package net.grieverc.contactlog.ui.worker
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.launch
-import net.grieverc.contactlog.repo.*
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
-import net.grieverc.contactlog.repo.specialty.toEntity
+import net.grieverc.contactlog.repo.SpecialtyWithWorkerListModel
+import net.grieverc.contactlog.repo.room.ContactLogRepository
 
 /**
  * Презентер для фрагмента со списком работников
  */
 
-class WorkerRosterViewModel(private val repository: ContactLogRepository) : ViewModel() {
-    private val specialtyMediatorLiveData = MediatorLiveData<List<SpecialtyModel>>()
-    val specialtyLiveData: LiveData<List<SpecialtyModel>> = specialtyMediatorLiveData
-    private var liveDataLast: LiveData<List<SpecialtyModel>>? = null
+class WorkerRosterViewModel(private val repository: ContactLogRepository, val specialtyId: String) : ViewModel() {
+    private val mediatorLiveData = MediatorLiveData<SpecialtyWithWorkerListModel>()
+    val specialtyWithWorkerListLiveData: LiveData<SpecialtyWithWorkerListModel> = mediatorLiveData
+    private var liveDataLast: LiveData<SpecialtyWithWorkerListModel>? = null
 
     init {
-        loadAll()
+        loadById(specialtyId)
     }
 
-    fun loadAll() {
-        liveDataLast?.let { specialtyMediatorLiveData.removeSource(it) }
-        val items = repository.specialtyLoad().asLiveData()
+    fun loadById(id: String) {
+        liveDataLast?.let { mediatorLiveData.removeSource(it) }
+        val items = repository.loadSpecialtyWithWorkerListById(id).asLiveData()
 
-        specialtyMediatorLiveData.addSource(items) {
-            specialtyMediatorLiveData.value = it
+        mediatorLiveData.addSource(items) {
+            mediatorLiveData.value = it
         }
         liveDataLast = items
-    }
-
-    fun insertSampleData() {
-        viewModelScope.launch {
-            SampleData.specialyList.forEach {
-                repository.insert(it.toEntity())
-            }
-        }
-    }
-
-    fun clearAll() {
-        viewModelScope.launch {
-            repository.clearAll()
-        }
     }
 }

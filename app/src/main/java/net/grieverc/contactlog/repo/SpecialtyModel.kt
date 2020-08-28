@@ -1,4 +1,4 @@
-package net.grieverc.contactlog.repo.specialty
+package net.grieverc.contactlog.repo
 
 import java.util.*
 

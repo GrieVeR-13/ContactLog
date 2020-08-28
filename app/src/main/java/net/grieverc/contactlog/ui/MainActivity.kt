@@ -4,21 +4,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.ActivityMainBinding
 import net.grieverc.contactlog.ui.specialty.SpecialtyRosterFragment
 import net.grieverc.contactlog.ui.worker.WorkerRosterFragment
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, SpecialtyRosterFragment())
-            .commit()
+        supportFragmentManager.findFragmentById(R.id.navigation_host)?.findNavController()?.let {
+            appBarConfiguration = AppBarConfiguration(it.graph)
+            setupActionBarWithNavController(it, appBarConfiguration)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -28,12 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.test1 -> {
-                println("asdasd")
-                return true
-            }
             else -> super.onOptionsItemSelected(item)
         }
 
     }
+
+    override fun onSupportNavigateUp() =
+        NavigationUI.navigateUp(findNavController(R.id.navigation_host), appBarConfiguration)
 }

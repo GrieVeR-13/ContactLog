@@ -2,7 +2,7 @@ package net.grieverc.contactlog.ui.specialty
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.grieverc.contactlog.databinding.SpecialtyRowBinding
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
+import net.grieverc.contactlog.repo.SpecialtyModel
 
 class SpecialtyRowHolder(
     val binding: SpecialtyRowBinding,

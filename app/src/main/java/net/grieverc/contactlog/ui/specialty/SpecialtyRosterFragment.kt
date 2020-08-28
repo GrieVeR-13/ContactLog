@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.SpecialtyRosterBinding
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
-import net.grieverc.contactlog.ui.worker.WorkerRosterFragment
+import net.grieverc.contactlog.repo.SpecialtyModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SpecialtyRosterFragment : Fragment() {
@@ -35,12 +35,7 @@ class SpecialtyRosterFragment : Fragment() {
         val adapter = SpecialtyListAdapter(
             layoutInflater
         ) {
-            val bundle = Bundle()
-            bundle.putString("id", it.id)
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, WorkerRosterFragment::class.java, bundle)
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(SpecialtyRosterFragmentDirections.actionSpecialtyRosterFragmentToWorkerRosterFragment(it.id))
         }
         vm.specialtyLiveData.observe(viewLifecycleOwner) { specialtyModelList: List<SpecialtyModel> ->
             adapter.submitList(specialtyModelList)
@@ -50,10 +45,6 @@ class SpecialtyRosterFragment : Fragment() {
             setAdapter(adapter)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-
-        }
-
-        binding.testButton.setOnClickListener {
 
         }
     }

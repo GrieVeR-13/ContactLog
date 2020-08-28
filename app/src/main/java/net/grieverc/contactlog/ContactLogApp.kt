@@ -1,9 +1,10 @@
 package net.grieverc.contactlog
 
 import android.app.Application
-import net.grieverc.contactlog.repo.ContactLogDatabase
-import net.grieverc.contactlog.repo.ContactLogRepository
+import net.grieverc.contactlog.repo.room.ContactLogDatabase
+import net.grieverc.contactlog.repo.room.ContactLogRepository
 import net.grieverc.contactlog.ui.specialty.SpecialtyRosterViewModel
+import net.grieverc.contactlog.ui.worker.WorkerDetailsViewModel
 import net.grieverc.contactlog.ui.worker.WorkerRosterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,10 +15,20 @@ import org.koin.dsl.module
 class ContactLogApp : Application() {
     private val koinModule = module {
         viewModel { SpecialtyRosterViewModel(get()) }
-        viewModel { WorkerRosterViewModel(get()) }
-        single { ContactLogRepository(get(), get()) }
+        viewModel { (specialtyId: String) ->
+            WorkerRosterViewModel(get(), specialtyId)
+        }
+        viewModel { (workerId: String) ->
+            WorkerDetailsViewModel(get(), workerId)
+        }
+        single {
+            ContactLogRepository(
+                get(),
+                get()
+            )
+        }
         single { ContactLogDatabase.newInstance(androidContext()) }
-        single { get<ContactLogDatabase>().specialtyEntityStore() }
+        single { get<ContactLogDatabase>().globalDao() }
     }
 
     override fun onCreate() {

@@ -2,9 +2,9 @@ package net.grieverc.contactlog.ui.specialty
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import net.grieverc.contactlog.repo.*
-import net.grieverc.contactlog.repo.specialty.SpecialtyModel
-import net.grieverc.contactlog.repo.specialty.toEntity
+import net.grieverc.contactlog.repo.SpecialtyModel
+import net.grieverc.contactlog.repo.room.ContactLogRepository
+import net.grieverc.contactlog.repo.room.SampleData
 
 /**
  * Презентер для фрагмента со списком специальностей
@@ -21,7 +21,7 @@ class SpecialtyRosterViewModel(private val repository: ContactLogRepository) : V
 
     fun loadAll() {
         liveDataLast?.let { specialtyMediatorLiveData.removeSource(it) }
-        val items = repository.specialtyLoad().asLiveData()
+        val items = repository.loadSpecialty().asLiveData()
 
         specialtyMediatorLiveData.addSource(items) {
             specialtyMediatorLiveData.value = it
@@ -31,8 +31,8 @@ class SpecialtyRosterViewModel(private val repository: ContactLogRepository) : V
 
     fun insertSampleData() {
         viewModelScope.launch {
-            SampleData.specialyList.forEach {
-                repository.insert(it.toEntity())
+            SampleData.specialtyWithWorkerList.forEach {
+                repository.insert(it)
             }
         }
     }
