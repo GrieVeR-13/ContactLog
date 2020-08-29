@@ -20,7 +20,8 @@ class WorkerDetailsViewModel(private val repository: ContactLogRepository, val w
     fun loadById(id: String) {
         liveDataLast?.let { mediatorLiveData.removeSource(it) }
         val items = repository.loadWorkerById(id).asLiveData()
-//
+        val asd = repository.globalDao.loadWorkerWithSpecialtyById(id)
+
         mediatorLiveData.addSource(items) {
             mediatorLiveData.value = it
         }

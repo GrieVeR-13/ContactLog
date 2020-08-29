@@ -6,9 +6,10 @@ import java.util.*
 
 const val C_TableName_Specialty = "Specialty"
 
-@Entity(tableName = C_TableName_Specialty, indices = [Index(value = ["id"])])
+@Entity(tableName = C_TableName_Specialty, indices = [Index(value = ["specialty_id"])])
 data class SpecialtyEntity(
     @PrimaryKey
+    @ColumnInfo(name = "specialty_id")
     var id: String = UUID.randomUUID().toString(),
     var name: String,
     var desciption: String

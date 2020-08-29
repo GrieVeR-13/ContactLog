@@ -2,6 +2,8 @@ package net.grieverc.contactlog.repo.room
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import net.grieverc.contactlog.repo.room.view.SpecialtyWithWorkerListEntity
+import net.grieverc.contactlog.repo.room.view.WorkerWithSpecialtyEntity
 
 @Dao
 interface GlobalDao {
@@ -30,8 +32,13 @@ interface GlobalDao {
     fun loadSpecialtyWithWorkerList(): Flow<List<SpecialtyWithWorkerListEntity>>
 
     @Transaction
-    @Query("SELECT * FROM $C_TableName_Specialty WHERE id = :specialtyId")
+    @Query("SELECT * FROM $C_TableName_Specialty WHERE specialty_id = :specialtyId")
     fun loadSpecialtyWithWorkerListById(specialtyId: String): Flow<SpecialtyWithWorkerListEntity>
+
+    @Transaction
+    @Query("SELECT * FROM $C_TableName_Worker, $C_TableName_Specialty " +
+            "WHERE $C_TableName_Worker.specialtyId = $C_TableName_Specialty.specialty_id AND $C_TableName_Worker.id = :workerId")
+    fun loadWorkerWithSpecialtyById(workerId: String): WorkerWithSpecialtyEntity
 
     @Transaction
     fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListEntity) {

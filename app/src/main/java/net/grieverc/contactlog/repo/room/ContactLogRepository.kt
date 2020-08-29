@@ -3,6 +3,7 @@ package net.grieverc.contactlog.repo.room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import net.grieverc.contactlog.repo.room.view.SpecialtyWithWorkerListEntity
 
 object SampleData {
     val specialtyWithWorkerList: List<SpecialtyWithWorkerListEntity>
@@ -84,6 +85,11 @@ class ContactLogRepository(
         globalDao.loadWorkerById(id).map {
             it.toModel()
         }
+
+//    fun loadWorkerWithSpecialtyById(id: String) =
+//        globalDao.loadWorkerWithSpecialtyById(id).map {
+//            it.toModel()
+//        }
 
     suspend fun insert(specialty: SpecialtyEntity) {
         withContext(Dispatchers.Default) {
