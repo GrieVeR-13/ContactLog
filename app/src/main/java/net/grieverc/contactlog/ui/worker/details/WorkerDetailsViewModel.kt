@@ -9,9 +9,9 @@ import net.grieverc.contactlog.repo.room.ContactLogRepository
  */
 
 class WorkerDetailsViewModel(private val repository: ContactLogRepository, val workerId: String) : ViewModel() {
-    private val mediatorLiveData = MediatorLiveData<WorkerModel>()
-    val workerLiveData: LiveData<WorkerModel> = mediatorLiveData
-    private var liveDataLast: LiveData<WorkerModel>? = null
+    private val mediatorLiveData = MediatorLiveData<WorkerModel?>()
+    val workerLiveData: LiveData<WorkerModel?> = mediatorLiveData
+    private var liveDataLast: LiveData<WorkerModel?>? = null
 
     init {
         loadById(workerId)
@@ -19,8 +19,8 @@ class WorkerDetailsViewModel(private val repository: ContactLogRepository, val w
 
     fun loadById(id: String) {
         liveDataLast?.let { mediatorLiveData.removeSource(it) }
+//        val items = repository.loadWorkerById(id).asLiveData()
         val items = repository.loadWorkerById(id).asLiveData()
-        val asd = repository.globalDao.loadWorkerWithSpecialtyById(id)
 
         mediatorLiveData.addSource(items) {
             mediatorLiveData.value = it

@@ -6,29 +6,28 @@ import java.util.*
 
 const val C_TableName_Specialty = "Specialty"
 
-@Entity(tableName = C_TableName_Specialty, indices = [Index(value = ["specialty_id"])])
+@Entity(tableName = C_TableName_Specialty, indices = [Index(value = ["specialtyId"])])
 data class SpecialtyEntity(
     @PrimaryKey
-    @ColumnInfo(name = "specialty_id")
-    var id: String = UUID.randomUUID().toString(),
+    var specialtyId: String = UUID.randomUUID().toString(),
     var name: String,
     var desciption: String
 ) {
 
-    constructor(specialtyModel: SpecialtyModel) : this(
-        specialtyModel.id,
-        specialtyModel.name,
-        specialtyModel.description
-    )
+//    constructor(specialtyModel: SpecialtyModel) : this(
+//        specialtyModel.id,
+//        specialtyModel.name,
+//        specialtyModel.description
+//    )
 
     fun toModel() =
         SpecialtyModel(
-            id,
+            specialtyId,
             name,
             desciption
         )
 }
 
-fun SpecialtyModel.toEntity() =
-    SpecialtyEntity(this)
+//fun SpecialtyModel.toEntity() =
+//    SpecialtyEntity(this)
 

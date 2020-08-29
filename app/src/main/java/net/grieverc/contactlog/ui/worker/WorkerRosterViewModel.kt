@@ -1,7 +1,7 @@
 package net.grieverc.contactlog.ui.worker
 
 import androidx.lifecycle.*
-import net.grieverc.contactlog.repo.SpecialtyWithWorkerListModel
+import net.grieverc.contactlog.repo.WorkerModel
 import net.grieverc.contactlog.repo.room.ContactLogRepository
 
 /**
@@ -9,9 +9,9 @@ import net.grieverc.contactlog.repo.room.ContactLogRepository
  */
 
 class WorkerRosterViewModel(private val repository: ContactLogRepository, val specialtyId: String) : ViewModel() {
-    private val mediatorLiveData = MediatorLiveData<SpecialtyWithWorkerListModel>()
-    val specialtyWithWorkerListLiveData: LiveData<SpecialtyWithWorkerListModel> = mediatorLiveData
-    private var liveDataLast: LiveData<SpecialtyWithWorkerListModel>? = null
+    private val mediatorLiveData = MediatorLiveData<List<WorkerModel>>()
+    val workerListLiveData: LiveData<List<WorkerModel>> = mediatorLiveData
+    private var liveDataLast: LiveData<List<WorkerModel>>? = null
 
     init {
         loadById(specialtyId)
@@ -19,7 +19,7 @@ class WorkerRosterViewModel(private val repository: ContactLogRepository, val sp
 
     fun loadById(id: String) {
         liveDataLast?.let { mediatorLiveData.removeSource(it) }
-        val items = repository.loadSpecialtyWithWorkerListById(id).asLiveData()
+        val items = repository.loadWorkerListBySpecialtyId(id).asLiveData()
 
         mediatorLiveData.addSource(items) {
             mediatorLiveData.value = it

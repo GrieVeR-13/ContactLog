@@ -6,5 +6,6 @@
     <string name="first_name">First Name</string>
     <string name="age">Age</string>
     <string name="worker_details">%1$s %2$s, age: %3$d</string>
+    <string name="worker_details_full"> %1$s %2$s\nBirth Date: %3$s\nAge: %4$d\nSpecialty: %5$s</string>
 
 </resources>

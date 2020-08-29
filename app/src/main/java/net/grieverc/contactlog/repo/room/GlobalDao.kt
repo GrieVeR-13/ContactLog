@@ -2,8 +2,8 @@ package net.grieverc.contactlog.repo.room
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import net.grieverc.contactlog.repo.room.view.SpecialtyWithWorkerListEntity
-import net.grieverc.contactlog.repo.room.view.WorkerWithSpecialtyEntity
+import net.grieverc.contactlog.repo.room.union.SpecialtyWithWorkerListUnion
+import net.grieverc.contactlog.repo.room.union.WorkerWithSpecialtyUnion
 
 @Dao
 interface GlobalDao {
@@ -19,8 +19,8 @@ interface GlobalDao {
 
 
     //Worker
-    @Query("SELECT * FROM $C_TableName_Worker WHERE id = :workerId")
-    fun loadWorkerById(workerId: String): Flow<WorkerEntity>
+//    @Query("SELECT * FROM $C_TableName_Worker WHERE workerId = :workerId")
+//    fun loadWorkerById(workerId: String): Flow<WorkerEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg entity: WorkerEntity)
@@ -29,19 +29,18 @@ interface GlobalDao {
     //SpecialtyWithWorkerList
     @Transaction
     @Query("SELECT * FROM $C_TableName_Specialty")
-    fun loadSpecialtyWithWorkerList(): Flow<List<SpecialtyWithWorkerListEntity>>
+    fun loadSpecialtyWithWorkerList(): Flow<List<SpecialtyWithWorkerListUnion>>
 
     @Transaction
-    @Query("SELECT * FROM $C_TableName_Specialty WHERE specialty_id = :specialtyId")
-    fun loadSpecialtyWithWorkerListById(specialtyId: String): Flow<SpecialtyWithWorkerListEntity>
+    @Query("SELECT * FROM $C_TableName_Specialty WHERE specialtyId = :specialtyId")
+    fun loadWorkerListBySpecialtyId(specialtyId: String): Flow<SpecialtyWithWorkerListUnion?>
 
     @Transaction
-    @Query("SELECT * FROM $C_TableName_Worker, $C_TableName_Specialty " +
-            "WHERE $C_TableName_Worker.specialtyId = $C_TableName_Specialty.specialty_id AND $C_TableName_Worker.id = :workerId")
-    fun loadWorkerWithSpecialtyById(workerId: String): WorkerWithSpecialtyEntity
+    @Query("SELECT * FROM $C_TableName_Worker, $C_TableName_Specialty WHERE $C_TableName_Worker.specialtyFId = $C_TableName_Specialty.specialtyId AND $C_TableName_Worker.workerId = :workerId")
+    fun loadWorkerById(workerId: String): Flow<WorkerWithSpecialtyUnion?>
 
     @Transaction
-    fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListEntity) {
+    fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListUnion) {
         insert(specialtyWithWorkerList.specialty)
         for (worker in specialtyWithWorkerList.workerList) {
             insert(worker)

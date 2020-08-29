@@ -3,60 +3,60 @@ package net.grieverc.contactlog.repo.room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import net.grieverc.contactlog.repo.room.view.SpecialtyWithWorkerListEntity
+import net.grieverc.contactlog.repo.room.union.SpecialtyWithWorkerListUnion
 
 object SampleData {
-    val specialtyWithWorkerList: List<SpecialtyWithWorkerListEntity>
+    val specialtyWithWorkerList: List<SpecialtyWithWorkerListUnion>
 
     init {
         val spec1 = SpecialtyEntity(
             name = "Инженер",
-            desciption = "d1"
+            desciption = ""
         )
         val spec2 = SpecialtyEntity(
             name = "Программист",
-            desciption = "d2"
+            desciption = ""
         )
         val spec3 = SpecialtyEntity(
             name = "Бухгалтер",
-            desciption = "d3"
+            desciption = ""
         )
         specialtyWithWorkerList = listOf(
-            SpecialtyWithWorkerListEntity(
+            SpecialtyWithWorkerListUnion(
                 specialty = spec1,
                 workerList = listOf(
                     WorkerEntity(
-                        first_name = "Иван1",
+                        first_name = "Иван",
                         surname = "Иванов",
                         age = 21,
-                        specialtyId = spec1.id
+                        specialtyFId = spec1.specialtyId
                     ),
                     WorkerEntity(
-                        first_name = "Иван2",
+                        first_name = "Петр",
                         surname = "Иванов",
                         age = 22,
-                        specialtyId = spec1.id
+                        specialtyFId = spec1.specialtyId
                     )
                 )
             ),
-            SpecialtyWithWorkerListEntity(
+            SpecialtyWithWorkerListUnion(
                 specialty = spec2,
                 workerList = listOf(
                     WorkerEntity(
-                        first_name = "Петр1",
+                        first_name = "Петр",
                         surname = "Петров",
                         age = 21,
-                        specialtyId = spec2.id
+                        specialtyFId = spec2.specialtyId
                     ),
                     WorkerEntity(
-                        first_name = "Петр2",
+                        first_name = "Иван",
                         surname = "Петров",
                         age = 22,
-                        specialtyId = spec2.id
+                        specialtyFId = spec2.specialtyId
                     )
                 )
             ),
-            SpecialtyWithWorkerListEntity(
+            SpecialtyWithWorkerListUnion(
                 specialty = spec3,
                 workerList = emptyList()
             )
@@ -76,20 +76,16 @@ class ContactLogRepository(
             }
         }
 
-    fun loadSpecialtyWithWorkerListById(id: String) =
-        globalDao.loadSpecialtyWithWorkerListById(id).map {
-            it.toModel()
+    fun loadWorkerListBySpecialtyId(id: String) =
+        globalDao.loadWorkerListBySpecialtyId(id).map {
+            it?.toModel() ?: emptyList()
         }
+
 
     fun loadWorkerById(id: String) =
         globalDao.loadWorkerById(id).map {
-            it.toModel()
+            it?.toModel()
         }
-
-//    fun loadWorkerWithSpecialtyById(id: String) =
-//        globalDao.loadWorkerWithSpecialtyById(id).map {
-//            it.toModel()
-//        }
 
     suspend fun insert(specialty: SpecialtyEntity) {
         withContext(Dispatchers.Default) {
@@ -97,7 +93,7 @@ class ContactLogRepository(
         }
     }
 
-    suspend fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListEntity) {
+    suspend fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListUnion) {
         withContext(Dispatchers.Default) {
             globalDao.insert(specialtyWithWorkerList)
         }

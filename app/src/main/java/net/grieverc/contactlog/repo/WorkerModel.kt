@@ -7,7 +7,7 @@ data class WorkerModel(
     var firstName: String,
     val surname: String,
     val age: Int,
-    val specialtyId: String,
-    val specialtyModel: SpecialtyModel? = null
+    val specialtyId: String
 ) {
+    var specialty: SpecialtyModel? = null
 }

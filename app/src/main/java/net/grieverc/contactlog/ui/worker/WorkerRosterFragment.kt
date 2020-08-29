@@ -39,9 +39,9 @@ class WorkerRosterFragment : Fragment() {
         val adapter = WorkerListAdapter(layoutInflater) {
             findNavController().navigate(WorkerRosterFragmentDirections.actionWorkerRosterFragmentToWorkerDetailsFragment(it.id))
         }
-        vm.specialtyWithWorkerListLiveData.observe(viewLifecycleOwner) {
-            binding.specialtyName.text = it.specialty.name
-            adapter.submitList(it.workerList)
+        vm.workerListLiveData.observe(viewLifecycleOwner) {
+            binding.specialtyName.text = it.firstOrNull()?.specialty?.name
+            adapter.submitList(it)
         }
 
         binding.workerList.apply {
