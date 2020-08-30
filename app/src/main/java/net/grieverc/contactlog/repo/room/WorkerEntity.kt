@@ -3,6 +3,8 @@ package net.grieverc.contactlog.repo.room
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import net.grieverc.contactlog.repo.WorkerModel
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
 const val C_TableName_Worker = "Worker"
@@ -18,12 +20,14 @@ const val C_TableName_Worker = "Worker"
     )],
     indices = [Index(value = ["specialtyFId"])]
 )
+
+@TypeConverters(DateTypeConverter::class)
 data class WorkerEntity(
     @PrimaryKey
     var workerId: String = UUID.randomUUID().toString(),
     var first_name: String,
     var surname: String,
-    val age: Int,
+    val birtyDate: LocalDate?,
     val specialtyFId: String
 ) {
 
@@ -31,7 +35,7 @@ data class WorkerEntity(
         model.id,
         model.firstName,
         model.surname,
-        model.age,
+        model.birthDate,
         model.specialtyId
     )
 
@@ -39,7 +43,7 @@ data class WorkerEntity(
         workerId,
         first_name,
         surname,
-        age,
+        birtyDate,
         specialtyFId
     )
 }
@@ -47,3 +51,21 @@ data class WorkerEntity(
 fun WorkerModel.toEntity() =
     WorkerEntity(this)
 
+object DateTypeConverter {
+    private val formatter = DateTimeFormatter.ofPattern("[dd.MM.yyyy]")
+
+    @TypeConverter
+    @JvmStatic
+    fun toLocalDate(dateString: String?) =
+        dateString?.let {
+            LocalDate.parse(it, formatter)
+        }
+
+
+    @TypeConverter
+    @JvmStatic
+    fun fromLocalDate(date: LocalDate?): String? {
+        return date?.format(formatter)
+    }
+
+}

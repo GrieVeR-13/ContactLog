@@ -7,6 +7,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.WorkerDetailsBinding
+import net.grieverc.contactlog.repo.room.DateTypeConverter
 import net.grieverc.contactlog.service.DisplayFormatter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -41,8 +42,8 @@ class WorkerDetailsFragment : Fragment() {
                     getString(R.string.worker_details_full),
                     DisplayFormatter.formatName(it.firstName),
                     DisplayFormatter.formatName(it.surname),
-                    it.surname,
-                    it.age,
+                    DateTypeConverter.fromLocalDate(it.birthDate) ?: "_",
+                    it.age() ?: "_",
                     it.specialty?.name ?: ""
                 )
             } else ""

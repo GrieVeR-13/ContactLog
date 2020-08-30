@@ -34,7 +34,7 @@ data class WorkerRemoteItem(
             WorkerModel(
                 firstName = f_name,
                 surname = l_name,
-                age = 1,
+                birthDate = birthday,
                 specialtyId = specialtyModel.id
             ).apply {
                 specialty = specialtyModel

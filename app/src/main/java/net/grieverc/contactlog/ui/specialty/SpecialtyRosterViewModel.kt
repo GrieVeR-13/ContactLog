@@ -19,8 +19,8 @@ class SpecialtyRosterViewModel(
 ) : ViewModel() {
     private val TAG = "ContactLog"
 
-    private val specialtyMediatorLiveData = MediatorLiveData<List<SpecialtyModel>>()
-    val specialtyLiveData: LiveData<List<SpecialtyModel>> = specialtyMediatorLiveData
+    private val mediatorLiveData = MediatorLiveData<List<SpecialtyModel>>()
+    val specialtyListLiveData: LiveData<List<SpecialtyModel>> = mediatorLiveData
     private var liveDataLast: LiveData<List<SpecialtyModel>>? = null
 
     init {
@@ -28,11 +28,11 @@ class SpecialtyRosterViewModel(
     }
 
     fun loadAll() {
-        liveDataLast?.let { specialtyMediatorLiveData.removeSource(it) }
+        liveDataLast?.let { mediatorLiveData.removeSource(it) }
         val items = repository.loadSpecialty().asLiveData()
 
-        specialtyMediatorLiveData.addSource(items) {
-            specialtyMediatorLiveData.value = it
+        mediatorLiveData.addSource(items) {
+            mediatorLiveData.value = it
         }
         liveDataLast = items
     }
@@ -46,7 +46,6 @@ class SpecialtyRosterViewModel(
     fun importRemoteData() {
         viewModelScope.launch {
             try {
-//                repository.importItems(context.getString(R.string.remote_data_url_default2))
                 repository.importItems(context.getString(R.string.remote_data_url_default))
             } catch (ex: Exception) {
                 Log.e(TAG, "Exception: Import Remote Data", ex)

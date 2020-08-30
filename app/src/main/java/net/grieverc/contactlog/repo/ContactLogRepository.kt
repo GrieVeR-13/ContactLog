@@ -9,20 +9,24 @@ import net.grieverc.contactlog.repo.room.GlobalDao
 import net.grieverc.contactlog.repo.room.SpecialtyEntity
 import net.grieverc.contactlog.repo.room.WorkerEntity
 import net.grieverc.contactlog.repo.room.union.SpecialtyWithWorkersUnion
+import org.threeten.bp.LocalDate
 
 object SampleData {
     val specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>
 
     init {
         val spec1 = SpecialtyEntity(
+            specialtyId = "1",
             name = "Инженер",
             desciption = ""
         )
         val spec2 = SpecialtyEntity(
+            specialtyId = "2",
             name = "Программист",
             desciption = ""
         )
         val spec3 = SpecialtyEntity(
+            specialtyId = "3",
             name = "Бухгалтер",
             desciption = ""
         )
@@ -33,13 +37,13 @@ object SampleData {
                     WorkerEntity(
                         first_name = "Иван",
                         surname = "Иванов",
-                        age = 21,
+                        birtyDate = LocalDate.now().minusYears(21),
                         specialtyFId = spec1.specialtyId
                     ),
                     WorkerEntity(
                         first_name = "Петр",
                         surname = "Иванов",
-                        age = 22,
+                        birtyDate = LocalDate.now().minusYears(22),
                         specialtyFId = spec1.specialtyId
                     )
                 )
@@ -50,13 +54,13 @@ object SampleData {
                     WorkerEntity(
                         first_name = "Петр",
                         surname = "Петров",
-                        age = 21,
+                        birtyDate = LocalDate.now().minusYears(21),
                         specialtyFId = spec2.specialtyId
                     ),
                     WorkerEntity(
                         first_name = "Иван",
                         surname = "Петров",
-                        age = 22,
+                        birtyDate = LocalDate.now().minusYears(22),
                         specialtyFId = spec2.specialtyId
                     )
                 )

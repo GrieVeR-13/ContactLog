@@ -5,7 +5,7 @@ import net.grieverc.contactlog.repo.WorkerModel
 import net.grieverc.contactlog.repo.ContactLogRepository
 
 /**
- * Презентер для фрагмента со списком работников
+ * Презентер для фрагмента с информацией о работанике
  */
 
 class WorkerDetailsViewModel(private val repository: ContactLogRepository, val workerId: String) : ViewModel() {
@@ -19,9 +19,7 @@ class WorkerDetailsViewModel(private val repository: ContactLogRepository, val w
 
     fun loadById(id: String) {
         liveDataLast?.let { mediatorLiveData.removeSource(it) }
-//        val items = repository.loadWorkerById(id).asLiveData()
         val items = repository.loadWorkerById(id).asLiveData()
-
         mediatorLiveData.addSource(items) {
             mediatorLiveData.value = it
         }

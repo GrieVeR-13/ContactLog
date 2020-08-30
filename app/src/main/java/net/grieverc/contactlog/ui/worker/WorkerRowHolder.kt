@@ -13,12 +13,18 @@ class WorkerRowHolder(
 
     fun bind(model: WorkerModel) {
         binding.apply {
-            workerDetails.text = String.format(
-                binding.root.context.getString(R.string.worker_details),
+            workerFullName.text = String.format(
+                binding.root.context.getString(R.string.worker_full_name),
                 DisplayFormatter.formatName(model.firstName),
-                DisplayFormatter.formatName(model.surname),
-                model.age
+                DisplayFormatter.formatName(model.surname)
             )
+
+            workerAge.text = model.age()?.let {
+                String.format(
+                    binding.root.context.getString(R.string.worker_age),
+                    it
+                )
+            } ?: ""
         }
         binding.root.setOnClickListener { onRowClick(model) }
     }

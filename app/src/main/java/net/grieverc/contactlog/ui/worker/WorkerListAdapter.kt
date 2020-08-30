@@ -32,6 +32,7 @@ private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<WorkerModel>() {
 
     override fun areContentsTheSame(oldItem: WorkerModel, newItem: WorkerModel): Boolean {
         return oldItem.firstName == newItem.firstName &&
-                oldItem.surname == oldItem.surname
+                oldItem.surname == oldItem.surname &&
+                oldItem.birthDate == oldItem.birthDate
     }
 }

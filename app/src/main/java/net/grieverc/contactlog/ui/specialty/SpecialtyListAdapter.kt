@@ -36,6 +36,6 @@ private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<SpecialtyModel>(
     }
 
     override fun areContentsTheSame(oldItem: SpecialtyModel, newItem: SpecialtyModel): Boolean {
-        return oldItem.description == newItem.description
+        return oldItem.name == newItem.name && oldItem.description == newItem.description
     }
 }
