@@ -27,13 +27,13 @@ data class WorkerEntity(
     val specialtyFId: String
 ) {
 
-//    constructor(model: WorkerModel) : this(
-//        model.id,
-//        model.firstName,
-//        model.surname,
-//        model.age,
-//        model.specialtyId
-//    )
+    constructor(model: WorkerModel) : this(
+        model.id,
+        model.firstName,
+        model.surname,
+        model.age,
+        model.specialtyId
+    )
 
     fun toModel() = WorkerModel(
         workerId,
@@ -44,6 +44,6 @@ data class WorkerEntity(
     )
 }
 
-//fun WorkerModel.toEntity() =
-//    WorkerEntity(this)
+fun WorkerModel.toEntity() =
+    WorkerEntity(this)
 

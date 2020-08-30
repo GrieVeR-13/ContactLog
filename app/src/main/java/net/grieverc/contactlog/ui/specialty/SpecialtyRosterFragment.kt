@@ -60,6 +60,10 @@ class SpecialtyRosterFragment : Fragment() {
                 vm.insertSampleData()
                 return true
             }
+            R.id.import_remote_data -> {
+                vm.importRemoteData()
+                return true
+            }
             R.id.delete_all -> {
                 vm.clearAll()
                 return true

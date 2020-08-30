@@ -2,7 +2,7 @@ package net.grieverc.contactlog.ui.worker
 
 import androidx.lifecycle.*
 import net.grieverc.contactlog.repo.WorkerModel
-import net.grieverc.contactlog.repo.room.ContactLogRepository
+import net.grieverc.contactlog.repo.ContactLogRepository
 
 /**
  * Презентер для фрагмента со списком работников

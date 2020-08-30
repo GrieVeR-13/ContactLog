@@ -14,11 +14,11 @@ data class SpecialtyEntity(
     var desciption: String
 ) {
 
-//    constructor(specialtyModel: SpecialtyModel) : this(
-//        specialtyModel.id,
-//        specialtyModel.name,
-//        specialtyModel.description
-//    )
+    constructor(specialtyModel: SpecialtyModel) : this(
+        specialtyModel.id,
+        specialtyModel.name,
+        specialtyModel.description
+    )
 
     fun toModel() =
         SpecialtyModel(
@@ -28,6 +28,5 @@ data class SpecialtyEntity(
         )
 }
 
-//fun SpecialtyModel.toEntity() =
-//    SpecialtyEntity(this)
-
+fun SpecialtyModel.toEntity() =
+    SpecialtyEntity(this)

@@ -7,6 +7,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.WorkerDetailsBinding
+import net.grieverc.contactlog.service.DisplayFormatter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -38,8 +39,8 @@ class WorkerDetailsFragment : Fragment() {
             binding.workerDetails.text = if (it != null) {
                 String.format(
                     getString(R.string.worker_details_full),
-                    it.firstName,
-                    it.surname,
+                    DisplayFormatter.formatName(it.firstName),
+                    DisplayFormatter.formatName(it.surname),
                     it.surname,
                     it.age,
                     it.specialty?.name ?: ""

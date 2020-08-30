@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.WorkerRowBinding
 import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.service.DisplayFormatter
 
 class WorkerRowHolder(
     private val binding: WorkerRowBinding,
@@ -14,8 +15,8 @@ class WorkerRowHolder(
         binding.apply {
             workerDetails.text = String.format(
                 binding.root.context.getString(R.string.worker_details),
-                model.firstName,
-                model.surname,
+                DisplayFormatter.formatName(model.firstName),
+                DisplayFormatter.formatName(model.surname),
                 model.age
             )
         }

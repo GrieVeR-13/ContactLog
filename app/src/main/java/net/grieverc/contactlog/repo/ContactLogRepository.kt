@@ -1,12 +1,17 @@
-package net.grieverc.contactlog.repo.room
+package net.grieverc.contactlog.repo
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import net.grieverc.contactlog.repo.room.union.SpecialtyWithWorkerListUnion
+import net.grieverc.contactlog.repo.remote.ContactLogRemoteData
+import net.grieverc.contactlog.repo.room.ContactLogDatabase
+import net.grieverc.contactlog.repo.room.GlobalDao
+import net.grieverc.contactlog.repo.room.SpecialtyEntity
+import net.grieverc.contactlog.repo.room.WorkerEntity
+import net.grieverc.contactlog.repo.room.union.SpecialtyWithWorkersUnion
 
 object SampleData {
-    val specialtyWithWorkerList: List<SpecialtyWithWorkerListUnion>
+    val specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>
 
     init {
         val spec1 = SpecialtyEntity(
@@ -21,8 +26,8 @@ object SampleData {
             name = "Бухгалтер",
             desciption = ""
         )
-        specialtyWithWorkerList = listOf(
-            SpecialtyWithWorkerListUnion(
+        specialtyWithWorkersUnionList = listOf(
+            SpecialtyWithWorkersUnion(
                 specialty = spec1,
                 workerList = listOf(
                     WorkerEntity(
@@ -39,7 +44,7 @@ object SampleData {
                     )
                 )
             ),
-            SpecialtyWithWorkerListUnion(
+            SpecialtyWithWorkersUnion(
                 specialty = spec2,
                 workerList = listOf(
                     WorkerEntity(
@@ -56,7 +61,7 @@ object SampleData {
                     )
                 )
             ),
-            SpecialtyWithWorkerListUnion(
+            SpecialtyWithWorkersUnion(
                 specialty = spec3,
                 workerList = emptyList()
             )
@@ -66,6 +71,7 @@ object SampleData {
 
 class ContactLogRepository(
     val contactLogDatabase: ContactLogDatabase,
+    val contactLogRemoteData: ContactLogRemoteData,
     val globalDao: GlobalDao
 ) {
 
@@ -93,9 +99,9 @@ class ContactLogRepository(
         }
     }
 
-    suspend fun insert(specialtyWithWorkerList: SpecialtyWithWorkerListUnion) {
+    suspend fun insert(specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>) {
         withContext(Dispatchers.Default) {
-            globalDao.insert(specialtyWithWorkerList)
+            globalDao.insert(specialtyWithWorkersUnionList)
         }
     }
 
@@ -103,5 +109,12 @@ class ContactLogRepository(
         withContext(Dispatchers.Default) {
             contactLogDatabase.clearAllTables()
         }
+    }
+
+    suspend fun importItems(url: String) {
+        val responseRemoteItem = contactLogRemoteData.load(url)
+        val workerList = responseRemoteItem.toModelList()
+        val specialtyWithWorkersUnionList = SpecialtyWithWorkersUnion.fromModelList(workerList)
+        insert(specialtyWithWorkersUnionList)
     }
 }
