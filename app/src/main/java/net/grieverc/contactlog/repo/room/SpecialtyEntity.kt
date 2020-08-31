@@ -1,7 +1,7 @@
 package net.grieverc.contactlog.repo.room
 
 import androidx.room.*
-import net.grieverc.contactlog.repo.SpecialtyModel
+import net.grieverc.contactlog.core.SpecialtyModel
 import java.util.*
 
 const val C_TableName_Specialty = "Specialty"
@@ -11,7 +11,7 @@ data class SpecialtyEntity(
     @PrimaryKey
     var specialtyId: String = UUID.randomUUID().toString(),
     var name: String,
-    var desciption: String
+    var description: String
 ) {
 
     constructor(specialtyModel: SpecialtyModel) : this(
@@ -24,7 +24,7 @@ data class SpecialtyEntity(
         SpecialtyModel(
             specialtyId,
             name,
-            desciption
+            description
         )
 }
 

@@ -2,14 +2,13 @@ package net.grieverc.contactlog.repo.room
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.core.WorkerModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
 const val C_TableName_Worker = "Worker"
 
-//@Entity(tableName = C_TableName_Worker, indices = [Index(value = ["id"])])
 @Entity(
     tableName = C_TableName_Worker,
     foreignKeys = [ForeignKey(
@@ -27,7 +26,7 @@ data class WorkerEntity(
     var workerId: String = UUID.randomUUID().toString(),
     var first_name: String,
     var surname: String,
-    val birtyDate: LocalDate?,
+    val birthDate: LocalDate?,
     val specialtyFId: String
 ) {
 
@@ -43,7 +42,7 @@ data class WorkerEntity(
         workerId,
         first_name,
         surname,
-        birtyDate,
+        birthDate,
         specialtyFId
     )
 }

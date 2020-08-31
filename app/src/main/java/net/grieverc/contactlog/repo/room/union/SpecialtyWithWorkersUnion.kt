@@ -2,7 +2,7 @@ package net.grieverc.contactlog.repo.room.union
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.core.WorkerModel
 import net.grieverc.contactlog.repo.room.SpecialtyEntity
 import net.grieverc.contactlog.repo.room.WorkerEntity
 import net.grieverc.contactlog.repo.room.toEntity

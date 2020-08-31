@@ -1,12 +1,9 @@
 package net.grieverc.contactlog.repo.remote
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonClass
-import com.squareup.moshi.ToJson
-import net.grieverc.contactlog.repo.SpecialtyModel
-import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.core.SpecialtyModel
+import net.grieverc.contactlog.core.WorkerModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -30,7 +27,10 @@ data class WorkerRemoteItem(
     fun toModel() =
         if (specialty.isNotEmpty()) {
             val specialtyModel =
-                SpecialtyModel(specialty.first().specialty_id.toString(), specialty.first().name)
+                SpecialtyModel(
+                    specialty.first().specialty_id.toString(),
+                    specialty.first().name
+                )
             WorkerModel(
                 firstName = f_name,
                 surname = l_name,

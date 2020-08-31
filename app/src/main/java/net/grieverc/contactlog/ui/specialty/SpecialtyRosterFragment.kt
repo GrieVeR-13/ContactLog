@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.SpecialtyRosterBinding
-import net.grieverc.contactlog.repo.SpecialtyModel
+import net.grieverc.contactlog.core.SpecialtyModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SpecialtyRosterFragment : Fragment() {

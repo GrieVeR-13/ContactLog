@@ -1,4 +1,4 @@
-package net.grieverc.contactlog.repo
+package net.grieverc.contactlog.core
 
 import org.threeten.bp.LocalDate
 import java.util.*

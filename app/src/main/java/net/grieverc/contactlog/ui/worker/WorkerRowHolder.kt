@@ -3,7 +3,7 @@ package net.grieverc.contactlog.ui.worker
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.WorkerRowBinding
-import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.core.WorkerModel
 import net.grieverc.contactlog.service.DisplayFormatter
 
 class WorkerRowHolder(

@@ -1,35 +1,35 @@
 package net.grieverc.contactlog.ui.specialty
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import net.grieverc.contactlog.repo.SpecialtyModel
-import net.grieverc.contactlog.repo.ContactLogRepository
-import net.grieverc.contactlog.repo.SampleData
+import net.grieverc.contactlog.core.SpecialtyModel
 import net.grieverc.contactlog.R
+import net.grieverc.contactlog.core.case.ContactLogImporter
+import net.grieverc.contactlog.core.case.SpecialtyProvider
+import net.grieverc.contactlog.repo.room.SampleData
 
 /**
  * Презентер для фрагмента со списком специальностей
  */
 
 class SpecialtyRosterViewModel(
-    private val repository: ContactLogRepository,
+    private val specialtyProvider: SpecialtyProvider,
+    private val contactLogImporter: ContactLogImporter,
     private val context: Context
 ) : ViewModel() {
-    private val TAG = "ContactLog"
 
     private val mediatorLiveData = MediatorLiveData<List<SpecialtyModel>>()
     val specialtyListLiveData: LiveData<List<SpecialtyModel>> = mediatorLiveData
     private var liveDataLast: LiveData<List<SpecialtyModel>>? = null
 
     init {
-        loadAll()
+        load()
     }
 
-    fun loadAll() {
+    private fun load() {
         liveDataLast?.let { mediatorLiveData.removeSource(it) }
-        val items = repository.loadSpecialty().asLiveData()
+        val items = specialtyProvider.getSpecialty().asLiveData()
 
         mediatorLiveData.addSource(items) {
             mediatorLiveData.value = it
@@ -39,23 +39,19 @@ class SpecialtyRosterViewModel(
 
     fun insertSampleData() {
         viewModelScope.launch {
-            repository.insert(SampleData.specialtyWithWorkersUnionList)
+            specialtyProvider.save(SampleData.specialtyWithWorkersUnionList)
         }
     }
 
     fun importRemoteData() {
         viewModelScope.launch {
-            try {
-                repository.importItems(context.getString(R.string.remote_data_url_default))
-            } catch (ex: Exception) {
-                Log.e(TAG, "Exception: Import Remote Data", ex)
-            }
+            contactLogImporter.import(context.getString(R.string.remote_data_url_default))
         }
     }
 
     fun clearAll() {
         viewModelScope.launch {
-            repository.clearAll()
+            specialtyProvider.clearAll()
         }
     }
 }

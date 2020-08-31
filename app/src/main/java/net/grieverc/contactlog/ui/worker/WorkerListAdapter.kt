@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import net.grieverc.contactlog.databinding.WorkerRowBinding
-import net.grieverc.contactlog.repo.WorkerModel
+import net.grieverc.contactlog.core.WorkerModel
 
 class WorkerListAdapter(
     private val inflater: LayoutInflater,

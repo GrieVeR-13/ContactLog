@@ -12,6 +12,8 @@ abstract class ContactLogDatabase : RoomDatabase() {
     companion object {
         fun newInstance(context: Context) = Room.databaseBuilder(context, ContactLogDatabase::class.java,
             C_DatabaseName_ContactLog
-        ).allowMainThreadQueries().build()
+        )
+//            .allowMainThreadQueries()
+            .build()
     }
 }
