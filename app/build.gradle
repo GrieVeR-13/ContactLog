@@ -5,6 +5,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('gkeystore.jks')
+            storePassword 'gkeystore13'
+            keyAlias 'gkeycontactlog'
+            keyPassword 'gkeycontactlog13'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -22,6 +30,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
