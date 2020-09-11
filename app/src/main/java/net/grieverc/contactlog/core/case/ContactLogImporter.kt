@@ -2,7 +2,6 @@ package net.grieverc.contactlog.core.case
 
 import android.util.Log
 import net.grieverc.contactlog.repo.Repository
-import net.grieverc.contactlog.service.UseCase
 
 class ContactLogImporter(private val repository: Repository) : UseCase() {
     private val TAG = "SpecialtyImporter"

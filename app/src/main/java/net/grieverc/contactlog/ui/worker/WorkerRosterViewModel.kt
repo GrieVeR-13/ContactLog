@@ -4,10 +4,6 @@ import androidx.lifecycle.*
 import net.grieverc.contactlog.core.WorkerModel
 import net.grieverc.contactlog.core.case.WorkerProvider
 
-/**
- * Презентер для фрагмента со списком работников
- */
-
 class WorkerRosterViewModel(private val workerProvider: WorkerProvider, specialtyId: String) : ViewModel() {
     private val mediatorLiveData = MediatorLiveData<List<WorkerModel>>()
     val workerListLiveData: LiveData<List<WorkerModel>> = mediatorLiveData

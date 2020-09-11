@@ -24,41 +24,9 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 class ContactLogApp : Application() {
-    private val koinModule = module {
-        viewModel {
-            SpecialtyRosterViewModel(get(), get(), androidContext())
-        }
-        viewModel { (specialtyId: String) ->
-            WorkerRosterViewModel(get(), specialtyId)
-        }
-        viewModel { (workerId: String) ->
-            WorkerDetailsViewModel(get(), workerId)
-        }
-        single { SpecialtyProvider(get()) }
-        single { ContactLogImporter(get()) }
-        single { WorkerProvider(get()) }
-        single {
-            ContactLogRepository(
-                get(),
-                get(),
-                get(),
-                get(named("applicationScope"))
-            ) as Repository
-        }
-        single { ContactLogDatabase.newInstance(androidContext()) }
-        single { get<ContactLogDatabase>().globalDao() }
-        single { ContactLogRemoteData(get()) }
-        single { OkHttpClient.Builder().build() }
-        single(named("applicationScope")) { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
-    }
-
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger()
-            androidContext(this@ContactLogApp)
-            modules(koinModule)
-        }
+        KoinModule.start(this)
         AndroidThreeTen.init(this)
     }
 }

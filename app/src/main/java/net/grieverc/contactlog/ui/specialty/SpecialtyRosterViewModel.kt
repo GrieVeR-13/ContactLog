@@ -9,10 +9,6 @@ import net.grieverc.contactlog.core.case.ContactLogImporter
 import net.grieverc.contactlog.core.case.SpecialtyProvider
 import net.grieverc.contactlog.repo.room.SampleData
 
-/**
- * Презентер для фрагмента со списком специальностей
- */
-
 class SpecialtyRosterViewModel(
     private val specialtyProvider: SpecialtyProvider,
     private val contactLogImporter: ContactLogImporter,

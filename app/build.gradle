@@ -5,14 +5,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('gkeystore.jks')
-            storePassword 'gkeystore13'
-            keyAlias 'gkeycontactlog'
-            keyPassword 'gkeycontactlog13'
-        }
-    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -30,7 +22,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
@@ -68,6 +59,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.8.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
 
     def moshi_version = "1.9.3"
     implementation "com.squareup.moshi:moshi:$moshi_version"
