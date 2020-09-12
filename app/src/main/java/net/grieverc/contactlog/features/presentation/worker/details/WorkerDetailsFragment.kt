@@ -43,8 +43,8 @@ class WorkerDetailsFragment : Fragment() {
                     DisplayFormatter.formatName(it.firstName),
                     DisplayFormatter.formatName(it.surname),
                     DateTypeConverter.fromLocalDate(it.birthDate) ?: "_",
-                    it.age() ?: "_",
-                    it.specialty?.name ?: ""
+                    it.age ?: "_",
+                    it.specialtyName ?: ""
                 )
             } else ""
         }

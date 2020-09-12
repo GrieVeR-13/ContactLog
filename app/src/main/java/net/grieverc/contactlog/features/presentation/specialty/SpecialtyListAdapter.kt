@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import net.grieverc.contactlog.databinding.SpecialtyRowBinding
-import net.grieverc.contactlog.features.domain.model.SpecialtyModel
+import net.grieverc.contactlog.features.presentation.view.SpecialtyView
 
 class SpecialtyListAdapter(
     private val inflater: LayoutInflater,
-    private val onRowClick: (SpecialtyModel) -> Unit
-) : ListAdapter<SpecialtyModel, SpecialtyRowHolder>(
+    private val onRowClick: (SpecialtyView) -> Unit
+) : ListAdapter<SpecialtyView, SpecialtyRowHolder>(
     SpecialtyListAdapterDiff
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialtyRowHolder {
@@ -30,12 +30,12 @@ class SpecialtyListAdapter(
     }
 }
 
-private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<SpecialtyModel>() {
-    override fun areItemsTheSame(oldItem: SpecialtyModel, newItem: SpecialtyModel): Boolean {
+private object SpecialtyListAdapterDiff : DiffUtil.ItemCallback<SpecialtyView>() {
+    override fun areItemsTheSame(oldItem: SpecialtyView, newItem: SpecialtyView): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: SpecialtyModel, newItem: SpecialtyModel): Boolean {
+    override fun areContentsTheSame(oldItem: SpecialtyView, newItem: SpecialtyView): Boolean {
         return oldItem.name == newItem.name && oldItem.description == newItem.description
     }
 }

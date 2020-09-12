@@ -40,7 +40,7 @@ class WorkerRosterFragment : Fragment() {
             findNavController().navigate(WorkerRosterFragmentDirections.actionWorkerRosterFragmentToWorkerDetailsFragment(it.id))
         }
         vm.workerListLiveData.observe(viewLifecycleOwner) {
-            binding.specialtyName.text = it.firstOrNull()?.specialty?.name
+            binding.specialtyName.text = it.firstOrNull()?.specialtyName
             adapter.submitList(it)
         }
 

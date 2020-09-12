@@ -37,7 +37,7 @@ class SpecialtyRosterFragment : Fragment() {
         ) {
             findNavController().navigate(SpecialtyRosterFragmentDirections.actionSpecialtyRosterFragmentToWorkerRosterFragment(it.id))
         }
-        vm.specialtyListLiveData.observe(viewLifecycleOwner) { specialtyModelList: List<SpecialtyModel> ->
+        vm.specialtyListLiveData.observe(viewLifecycleOwner) { specialtyModelList ->
             adapter.submitList(specialtyModelList)
         }
 

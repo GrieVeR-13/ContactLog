@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonClass
 import net.grieverc.contactlog.features.domain.model.SpecialtyModel
 import net.grieverc.contactlog.features.domain.model.WorkerModel
 import org.threeten.bp.LocalDate
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class ResponseRemoteEntity(
@@ -28,6 +29,7 @@ data class WorkerRemoteEntity(
                     specialty.first().name
                 )
             WorkerModel(
+                UUID.randomUUID().toString(),
                 firstName = f_name,
                 surname = l_name,
                 birthDate = birthday,
