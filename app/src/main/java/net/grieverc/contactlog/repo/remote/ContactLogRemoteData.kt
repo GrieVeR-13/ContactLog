@@ -3,26 +3,26 @@ package net.grieverc.contactlog.repo.remote
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.http.GET
 import java.io.IOException
 
+interface RemoteApi {
+    @GET("65gb/static/raw/master/testTask.json")
+    fun getData(): Call<ResponseRemoteItem>
+}
 
-class ContactLogRemoteData(val okHttpClient: OkHttpClient) {
-    private val moshi = Moshi.Builder().add(MoshiLocalDateAdapter()).build()
-    val adapter = moshi.adapter(ResponseRemoteItem::class.java)
+class ContactLogRemoteData(retrofit: Retrofit) {
+    private val remoteApi = retrofit.create(RemoteApi::class.java)
 
     suspend fun load(url: String) = withContext(Dispatchers.IO) {
-        val request = Request.Builder().url(url).build()
-        val response = okHttpClient.newCall(request).execute()
+        val response = remoteApi.getData().execute()
         if (response.isSuccessful) {
-            val responceRemoteItem = response.body?.let {
-                adapter.fromJson(it.source())
-            }
+            response.body()
                 ?: throw IOException("Response body is null: $response")
-            responceRemoteItem
         } else {
-            throw IOException("Unexpected response code: ${response.code}")
+            throw IOException("Unexpected response code: ${response.code()}")
         }
     }
 

@@ -9,5 +9,5 @@
     <string name="worker_full_name">%1$s %2$s</string>
     <string name="worker_age">(%1$d years)</string>
     <string name="worker_details_full">Full name: %1$s %2$s\nBirth Date: %3$s\nAge: %4$s\nSpecialty: %5$s</string>
-    <string name="remote_data_url_default">https://gitlab.65apps.com/65gb/static/raw/master/testTask.json</string>
+    <string name="remote_data_url_default">https://gitlab.65apps.com/</string>
 </resources>
