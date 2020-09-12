@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/specialtyRosterFragment"
-        android:name="net.grieverc.contactlog.ui.specialty.SpecialtyRosterFragment"
+        android:name="net.grieverc.contactlog.features.presentation.specialty.SpecialtyRosterFragment"
         android:label="Specialty">
         <action
             android:id="@+id/action_specialtyRosterFragment_to_workerRosterFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/workerRosterFragment"
-        android:name="net.grieverc.contactlog.ui.worker.WorkerRosterFragment"
+        android:name="net.grieverc.contactlog.features.presentation.worker.WorkerRosterFragment"
         android:label="Staff">
         <argument
             android:name="specialtyId"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/workerDetailsFragment"
-        android:name="net.grieverc.contactlog.ui.worker.WorkerDetailsFragment"
+        android:name="net.grieverc.contactlog.features.presentation.worker.details.WorkerDetailsFragment"
         android:label="Employee">
         <argument
             android:name="workerId"
