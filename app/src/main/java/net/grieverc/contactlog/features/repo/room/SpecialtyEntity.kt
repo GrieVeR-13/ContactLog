@@ -9,16 +9,10 @@ const val C_TableName_Specialty = "Specialty"
 @Entity(tableName = C_TableName_Specialty, indices = [Index(value = ["specialtyId"])])
 data class SpecialtyEntity(
     @PrimaryKey
-    var specialtyId: String = UUID.randomUUID().toString(),
+    var specialtyId: String,
     var name: String,
     var description: String
 ) {
-
-    constructor(specialtyModel: SpecialtyModel) : this(
-        specialtyModel.id,
-        specialtyModel.name,
-        specialtyModel.description
-    )
 
     fun toModel() =
         SpecialtyModel(
@@ -29,4 +23,8 @@ data class SpecialtyEntity(
 }
 
 fun SpecialtyModel.toEntity() =
-    SpecialtyEntity(this)
+    SpecialtyEntity(
+        id,
+        name,
+        description
+    )

@@ -1,22 +1,18 @@
 package net.grieverc.contactlog.features.domain.case
 
 import android.util.Log
-import net.grieverc.contactlog.R
 import net.grieverc.contactlog.core.interactor.UseCase
 import net.grieverc.contactlog.features.repo.remote.RemoteRepository
-import net.grieverc.contactlog.features.repo.remote.ResponseRemoteEntity
 import net.grieverc.contactlog.features.repo.room.Repository
 import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnion
 
 class ContactLogImporter(private val remoteRepository: RemoteRepository,
                          private val repository: Repository) : UseCase() {
 
-    suspend fun import(url: String) {
+    suspend fun importToRepository(url: String) {
         try {
-            val responseRemoteEntity = remoteRepository.importItems(url)
-            val workerList = responseRemoteEntity.toModelList()
-            val specialtyWithWorkersUnionList = SpecialtyWithWorkersUnion.fromModelList(workerList)
-            repository.insert(specialtyWithWorkersUnionList)
+            val workerList = remoteRepository.importWorkerList(url)
+            repository.insertWorkerList(workerList)
 
         } catch (ex: Exception) {
             Log.e(TAG, "Exception: Import Remote Data", ex)

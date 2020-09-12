@@ -7,7 +7,7 @@ import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnio
 
 interface Repository {
     fun loadSpecialty(): Flow<List<SpecialtyModel>>
-    suspend fun insert(specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>)
+    suspend fun insertWorkerList(workerList: List<WorkerModel>)
 
     fun loadWorkerListBySpecialtyId(id: String): Flow<List<WorkerModel>>
     fun loadWorkerById(id: String): Flow<WorkerModel?>

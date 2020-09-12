@@ -9,7 +9,7 @@ import net.grieverc.contactlog.features.domain.case.ContactLogImporter
 import net.grieverc.contactlog.features.domain.case.SpecialtyProvider
 import net.grieverc.contactlog.features.presentation.view.SpecialtyView
 import net.grieverc.contactlog.features.presentation.view.toView
-import net.grieverc.contactlog.features.repo.room.SampleData
+import net.grieverc.contactlog.features.domain.model.SampleData
 
 class SpecialtyRosterViewModel(
     private val specialtyProvider: SpecialtyProvider,
@@ -41,13 +41,13 @@ class SpecialtyRosterViewModel(
 
     fun insertSampleData() {
         viewModelScope.launch {
-            specialtyProvider.save(SampleData.specialtyWithWorkersUnionList)
+            specialtyProvider.save(SampleData.workerList)
         }
     }
 
     fun importRemoteData() {
         viewModelScope.launch {
-            contactLogImporter.import(context.getString(R.string.remote_data_url_default))
+            contactLogImporter.importToRepository(context.getString(R.string.remote_data_url_default))
         }
     }
 

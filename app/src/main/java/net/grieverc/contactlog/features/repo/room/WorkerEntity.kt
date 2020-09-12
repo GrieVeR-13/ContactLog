@@ -23,20 +23,12 @@ const val C_TableName_Worker = "Worker"
 @TypeConverters(DateTypeConverter::class)
 data class WorkerEntity(
     @PrimaryKey
-    var workerId: String = UUID.randomUUID().toString(),
+    var workerId: String,
     var first_name: String,
     var surname: String,
     val birthDate: LocalDate?,
     val specialtyFId: String
 ) {
-
-    constructor(model: WorkerModel) : this(
-        model.id,
-        model.firstName,
-        model.surname,
-        model.birthDate,
-        model.specialtyId
-    )
 
     fun toModel() = WorkerModel(
         workerId,
@@ -48,7 +40,13 @@ data class WorkerEntity(
 }
 
 fun WorkerModel.toEntity() =
-    WorkerEntity(this)
+    WorkerEntity(
+        id,
+        firstName,
+        surname,
+        birthDate,
+        specialtyId
+    )
 
 object DateTypeConverter {
     private val formatter = DateTimeFormatter.ofPattern("[dd.MM.yyyy]")

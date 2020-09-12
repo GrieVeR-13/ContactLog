@@ -3,6 +3,7 @@ package net.grieverc.contactlog.features.repo.room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import net.grieverc.contactlog.features.domain.model.WorkerModel
 import net.grieverc.contactlog.features.repo.remote.ContactLogRemoteService
 import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnion
 
@@ -30,8 +31,15 @@ class ContactLogRepository(
         }
 
 
-    override suspend fun insert(specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>) {
+    suspend fun insert(specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>) {
         withContext(applicationScope.coroutineContext) {
+            globalDao.insert(specialtyWithWorkersUnionList)
+        }
+    }
+
+    override suspend fun insertWorkerList(workerList: List<WorkerModel>) {
+        withContext(applicationScope.coroutineContext) {
+            val specialtyWithWorkersUnionList = SpecialtyWithWorkersUnion.fromModelList(workerList)
             globalDao.insert(specialtyWithWorkersUnionList)
         }
     }
