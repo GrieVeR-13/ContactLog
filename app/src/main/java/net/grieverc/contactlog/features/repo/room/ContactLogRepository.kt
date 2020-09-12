@@ -8,7 +8,6 @@ import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnio
 
 class ContactLogRepository(
     private val contactLogDatabase: ContactLogDatabase,
-    private val contactLogRemoteService: ContactLogRemoteService,
     private val globalDao: GlobalDao,
     private val applicationScope: CoroutineScope
 ) : Repository {
@@ -41,13 +40,6 @@ class ContactLogRepository(
         withContext(applicationScope.coroutineContext) {
             contactLogDatabase.clearAllTables()
         }
-    }
-
-    override suspend fun importItems(url: String) {
-        val responseRemoteItem = contactLogRemoteService.load(url)
-        val workerList = responseRemoteItem.toModelList()
-        val specialtyWithWorkersUnionList = SpecialtyWithWorkersUnion.fromModelList(workerList)
-        insert(specialtyWithWorkersUnionList)
     }
 
 }

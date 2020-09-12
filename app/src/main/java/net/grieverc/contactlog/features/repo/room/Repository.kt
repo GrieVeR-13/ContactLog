@@ -12,6 +12,5 @@ interface Repository {
     fun loadWorkerListBySpecialtyId(id: String): Flow<List<WorkerModel>>
     fun loadWorkerById(id: String): Flow<WorkerModel?>
 
-    suspend fun importItems(url: String)
     suspend fun clearAll()
 }

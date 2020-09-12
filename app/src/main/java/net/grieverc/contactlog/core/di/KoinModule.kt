@@ -17,6 +17,8 @@ import net.grieverc.contactlog.features.repo.remote.ContactLogRemoteService
 import net.grieverc.contactlog.features.repo.room.ContactLogDatabase
 import net.grieverc.contactlog.features.presentation.worker.details.WorkerDetailsViewModel
 import net.grieverc.contactlog.features.presentation.worker.WorkerRosterViewModel
+import net.grieverc.contactlog.features.repo.remote.ContactLogRemoteRepository
+import net.grieverc.contactlog.features.repo.remote.RemoteRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -40,11 +42,10 @@ object KoinModule {
             WorkerDetailsViewModel(get(), workerId)
         }
         single { SpecialtyProvider(get()) }
-        single { ContactLogImporter(get()) }
+        single { ContactLogImporter(get(), get()) }
         single { WorkerProvider(get()) }
         single {
             ContactLogRepository(
-                get(),
                 get(),
                 get(),
                 get(named(applicationScope))
@@ -52,6 +53,11 @@ object KoinModule {
         }
         single { ContactLogDatabase.newInstance(androidContext()) }
         single { get<ContactLogDatabase>().globalDao() }
+        single {
+            ContactLogRemoteRepository(
+                get()
+            ) as RemoteRepository
+        }
         single { ContactLogRemoteService(get()) }
         single {
             val moshi = Moshi.Builder().add(MoshiLocalDateAdapter()).build()
