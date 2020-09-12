@@ -10,6 +10,6 @@ data class WorkerWithSpecialtyUnion(
     @Embedded
     val specialty: SpecialtyEntity
 ) {
-    fun toModel() = worker.toModel().also { it.specialty = specialty.toModel() }
+    fun toModel() = worker.toModel(specialty.toModel())
 
 }

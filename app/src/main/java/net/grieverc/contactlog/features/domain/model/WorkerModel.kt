@@ -8,9 +8,8 @@ data class WorkerModel(
     var firstName: String,
     val surname: String,
     val birthDate: LocalDate?,
-    val specialtyId: String
+    var specialty: SpecialtyModel
 ) {
-    var specialty: SpecialtyModel? = null
 
     fun age() =
         birthDate?.let { LocalDate.now().year - birthDate.year }

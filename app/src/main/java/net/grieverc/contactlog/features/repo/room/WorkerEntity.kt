@@ -2,6 +2,7 @@ package net.grieverc.contactlog.features.repo.room
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import net.grieverc.contactlog.features.domain.model.SpecialtyModel
 import net.grieverc.contactlog.features.domain.model.WorkerModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -30,12 +31,12 @@ data class WorkerEntity(
     val specialtyFId: String
 ) {
 
-    fun toModel() = WorkerModel(
+    fun toModel(specialty: SpecialtyModel) = WorkerModel(
         workerId,
         first_name,
         surname,
         birthDate,
-        specialtyFId
+        specialty
     )
 }
 
@@ -45,7 +46,7 @@ fun WorkerModel.toEntity() =
         firstName,
         surname,
         birthDate,
-        specialtyId
+        specialty.id
     )
 
 object DateTypeConverter {

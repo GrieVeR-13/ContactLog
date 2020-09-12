@@ -33,11 +33,8 @@ data class WorkerRemoteEntity(
                 firstName = f_name,
                 surname = l_name,
                 birthDate = birthday,
-                specialtyId = specialtyModel.id
-            ).apply {
                 specialty = specialtyModel
-            }
-
+            )
         } else
             null
 }

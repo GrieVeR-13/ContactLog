@@ -19,7 +19,7 @@ data class SpecialtyWithWorkersUnion(
     fun toModel(): List<WorkerModel> {
         val specialtyModel = specialty.toModel()
         return workerList.map {
-            it.toModel().apply { specialty = specialtyModel }
+            it.toModel(specialtyModel)
         }
     }
 

@@ -10,7 +10,7 @@ data class WorkerView(
     val surname: String,
     val birthDate: LocalDate?,
     val age: Int?,
-    val specialtyName: String?
+    val specialtyName: String
 ) {
 
 }
@@ -22,5 +22,5 @@ fun WorkerModel.toView() =
         surname,
         birthDate,
         age(),
-        specialty?.name
+        specialty.name
     )
