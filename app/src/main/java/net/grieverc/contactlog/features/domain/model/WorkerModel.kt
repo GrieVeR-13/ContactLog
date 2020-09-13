@@ -8,9 +8,9 @@ data class WorkerModel(
     var firstName: String,
     val surname: String,
     val birthDate: LocalDate?,
-    var specialty: SpecialtyModel
+    var specialty: SpecialtyModel?
 ) {
 
     fun age() =
-        birthDate?.let { LocalDate.now().year - birthDate.year }
+        birthDate?.let { birthDate.until(LocalDate.now()).years}
 }

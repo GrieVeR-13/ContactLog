@@ -1,8 +1,9 @@
 package net.grieverc.contactlog.core.service
 
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
-class DisplayFormatter {
+class FormatterService {
     companion object {
         fun formatName(name: String) =
             if (name.isNotEmpty()) {
@@ -10,5 +11,7 @@ class DisplayFormatter {
             } else
                 name
 
+       val C_DateTimeFormatterDefault = DateTimeFormatter.ofPattern("[dd.MM.yyyy]")
     }
 }
+

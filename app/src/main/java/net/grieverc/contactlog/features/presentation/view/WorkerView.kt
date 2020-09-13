@@ -6,11 +6,11 @@ import java.util.*
 
 data class WorkerView(
     val id: String,
-    var firstName: String,
+    val firstName: String,
     val surname: String,
     val birthDate: LocalDate?,
     val age: Int?,
-    val specialtyName: String
+    val specialtyName: String?
 ) {
 
 }
@@ -22,5 +22,5 @@ fun WorkerModel.toView() =
         surname,
         birthDate,
         age(),
-        specialty.name
+        specialty?.name
     )

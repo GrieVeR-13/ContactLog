@@ -11,7 +11,7 @@ class SpecialtyRowHolder(
 
     fun bind(model: SpecialtyView) {
         binding.apply {
-            root.setOnClickListener{ onRowClick(model) }
+            root.setOnClickListener { onRowClick(model) }
             specialtyName.text = model.name
             specialtyDescription.text = model.description
         }

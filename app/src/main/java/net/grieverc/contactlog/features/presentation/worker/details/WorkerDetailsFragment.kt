@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import net.grieverc.contactlog.R
 import net.grieverc.contactlog.databinding.WorkerDetailsBinding
 import net.grieverc.contactlog.features.repo.room.DateTypeConverter
-import net.grieverc.contactlog.core.service.DisplayFormatter
+import net.grieverc.contactlog.core.service.FormatterService
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -40,9 +40,9 @@ class WorkerDetailsFragment : Fragment() {
             binding.workerDetails.text = if (it != null) {
                 String.format(
                     getString(R.string.worker_details_full),
-                    DisplayFormatter.formatName(it.firstName),
-                    DisplayFormatter.formatName(it.surname),
-                    DateTypeConverter.fromLocalDate(it.birthDate) ?: "_",
+                    FormatterService.formatName(it.firstName),
+                    FormatterService.formatName(it.surname),
+                    it.birthDate?.format(FormatterService.C_DateTimeFormatterDefault) ?: "_",
                     it.age ?: "_",
                     it.specialtyName ?: ""
                 )

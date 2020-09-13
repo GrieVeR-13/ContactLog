@@ -12,5 +12,8 @@ class MoshiLocalDateAdapter {
 
     @FromJson
     fun fromJson(dateString: String): LocalDate? =
-        if (dateString.isNotEmpty()) LocalDate.parse(dateString, formatter) else null
+        if (dateString.isNotEmpty())
+            LocalDate.parse(dateString, formatter)
+        else
+            null
 }

@@ -2,11 +2,10 @@ package net.grieverc.contactlog.features.repo.room
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import net.grieverc.contactlog.core.service.FormatterService
 import net.grieverc.contactlog.features.domain.model.SpecialtyModel
 import net.grieverc.contactlog.features.domain.model.WorkerModel
 import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
 
 const val C_TableName_Worker = "Worker"
 
@@ -28,7 +27,7 @@ data class WorkerEntity(
     var first_name: String,
     var surname: String,
     val birthDate: LocalDate?,
-    val specialtyFId: String
+    val specialtyFId: String?
 ) {
 
     fun toModel(specialty: SpecialtyModel) = WorkerModel(
@@ -46,24 +45,6 @@ fun WorkerModel.toEntity() =
         firstName,
         surname,
         birthDate,
-        specialty.id
+        specialty?.id
     )
 
-object DateTypeConverter {
-    private val formatter = DateTimeFormatter.ofPattern("[dd.MM.yyyy]")
-
-    @TypeConverter
-    @JvmStatic
-    fun toLocalDate(dateString: String?) =
-        dateString?.let {
-            LocalDate.parse(it, formatter)
-        }
-
-
-    @TypeConverter
-    @JvmStatic
-    fun fromLocalDate(date: LocalDate?): String? {
-        return date?.format(formatter)
-    }
-
-}
