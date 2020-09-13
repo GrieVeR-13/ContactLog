@@ -23,17 +23,17 @@ data class WorkerRemoteEntity(
 ) {
     fun toModel() =
         if (specialty.isNotEmpty()) {
-            val specialtyModel =
-                SpecialtyModel(
-                    specialty.first().specialty_id.toString(),
-                    specialty.first().name
-                )
             WorkerModel(
                 UUID.randomUUID().toString(),
                 firstName = f_name,
                 surname = l_name,
                 birthDate = birthday,
-                specialty = specialtyModel
+                specialtyList = specialty.map {
+                    SpecialtyModel(
+                        it.specialty_id.toString(),
+                        it.name
+                    )
+                }
             )
         } else
             null

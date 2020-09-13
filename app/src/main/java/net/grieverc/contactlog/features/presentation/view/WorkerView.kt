@@ -22,5 +22,5 @@ fun WorkerModel.toView() =
         surname,
         birthDate,
         age(),
-        specialty?.name
+        specialtyList.joinToString { it.name }
     )

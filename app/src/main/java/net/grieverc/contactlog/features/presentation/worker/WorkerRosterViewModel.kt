@@ -1,8 +1,10 @@
 package net.grieverc.contactlog.features.presentation.worker
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.flow.map
-import net.grieverc.contactlog.features.domain.model.WorkerModel
 import net.grieverc.contactlog.features.domain.case.WorkerProvider
 import net.grieverc.contactlog.features.presentation.view.WorkerView
 import net.grieverc.contactlog.features.presentation.view.toView

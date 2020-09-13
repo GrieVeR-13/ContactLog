@@ -2,11 +2,15 @@ package net.grieverc.contactlog.features.repo.room
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import net.grieverc.contactlog.features.repo.room.union.WorkerWithSpecialtyUnion
 import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnion
+import net.grieverc.contactlog.features.repo.room.union.WorkerWithSpecialtysUnion
 
 @Dao
 interface GlobalDao {
+    //Worker
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(vararg entity: WorkerEntity)
+
     //Specialty
     @Query("SELECT * FROM $C_TableName_Specialty")
     fun loadSpecialty(): Flow<List<SpecialtyEntity>>
@@ -18,31 +22,31 @@ interface GlobalDao {
     fun delete(vararg entity: SpecialtyEntity)
 
 
-    //Worker
+    //WorkerSpecialtyCrossRef
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg entity: WorkerEntity)
+    fun insert(vararg entity: WorkerSpecialtyCrossRef)
 
 
-    //SpecialtyWithWorkerList
-    @Transaction
-    @Query("SELECT * FROM $C_TableName_Specialty")
-    fun loadSpecialtyWithWorkerList(): Flow<List<SpecialtyWithWorkersUnion>>
-
+    //SpecialtyWithWorkersUnion
     @Transaction
     @Query("SELECT * FROM $C_TableName_Specialty WHERE specialtyId = :specialtyId")
     fun loadWorkerListBySpecialtyId(specialtyId: String): Flow<SpecialtyWithWorkersUnion?>
 
+
+    //WorkerWithSpecialtysUnion
     @Transaction
-    @Query("SELECT * FROM $C_TableName_Worker, $C_TableName_Specialty WHERE $C_TableName_Worker.specialtyFId = $C_TableName_Specialty.specialtyId AND $C_TableName_Worker.workerId = :workerId")
-    fun loadWorkerById(workerId: String): Flow<WorkerWithSpecialtyUnion?>
+    @Query("SELECT * FROM $C_TableName_Worker WHERE workerId = :workerId")
+    fun loadWorkerById(workerId: String): Flow<WorkerWithSpecialtysUnion?>
 
     @Transaction
-    fun insert(specialtyWithWorkersUnionList: List<SpecialtyWithWorkersUnion>) {
-        specialtyWithWorkersUnionList.forEach { specialtyWithWorkersUnion ->
-            insert(specialtyWithWorkersUnion.specialty)
-            for (worker in specialtyWithWorkersUnion.workerList) {
-                insert(worker)
+    fun insert(workerWithSpecialtysUnionList: List<WorkerWithSpecialtysUnion>) {
+        workerWithSpecialtysUnionList.forEach { workerWithSpecialtysUnion ->
+            insert(workerWithSpecialtysUnion.worker)
+            workerWithSpecialtysUnion.specialtyList.forEach {
+                insert(it)
+                insert(WorkerSpecialtyCrossRef(workerWithSpecialtysUnion.worker.workerId, it.specialtyId))
             }
         }
     }
+
 }

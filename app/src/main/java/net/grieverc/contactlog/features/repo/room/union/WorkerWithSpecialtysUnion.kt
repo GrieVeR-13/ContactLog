@@ -7,21 +7,22 @@ import net.grieverc.contactlog.features.domain.model.WorkerModel
 import net.grieverc.contactlog.features.repo.room.SpecialtyEntity
 import net.grieverc.contactlog.features.repo.room.WorkerEntity
 import net.grieverc.contactlog.features.repo.room.WorkerSpecialtyCrossRef
+import net.grieverc.contactlog.features.repo.room.toEntity
 
-data class SpecialtyWithWorkersUnion(
+data class WorkerWithSpecialtysUnion(
     @Embedded
-    val specialty: SpecialtyEntity,
+    val worker: WorkerEntity,
     @Relation(
-        parentColumn = "specialtyId",
-        entityColumn = "workerId",
+        parentColumn = "workerId",
+        entityColumn = "specialtyId",
         associateBy = Junction(WorkerSpecialtyCrossRef::class)
     )
-    val workerList: List<WorkerEntity>
+    val specialtyList: List<SpecialtyEntity>
 ) {
-    fun toModel(): List<WorkerModel> {
-        val specialtyModel = specialty.toModel()
-        return workerList.map {
-            it.toModel(listOf(specialtyModel))
-        }
-    }
+    constructor(worker: WorkerModel) : this(
+        worker.toEntity(),
+        worker.specialtyList.map { it.toEntity() })
+
+    fun toModel() = worker.toModel(specialtyList.map { it.toModel() })
 }
+

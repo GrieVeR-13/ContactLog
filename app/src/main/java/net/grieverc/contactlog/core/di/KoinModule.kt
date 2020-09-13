@@ -1,12 +1,9 @@
 package net.grieverc.contactlog.core.di
 
 import android.content.Context
-import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import net.grieverc.contactlog.R
-import net.grieverc.contactlog.features.repo.remote.MoshiLocalDateAdapter
 import net.grieverc.contactlog.features.domain.case.ContactLogImporter
 import net.grieverc.contactlog.features.domain.case.SpecialtyProvider
 import net.grieverc.contactlog.features.domain.case.WorkerProvider
@@ -25,13 +22,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 object KoinModule {
-    private val instance = module {
-        val applicationScope = "applicationScope"
+    private const val applicationScope = "applicationScope"
 
+    private val instance = module {
         viewModel {
             SpecialtyRosterViewModel(get(), get(), androidContext())
         }
@@ -59,13 +54,7 @@ object KoinModule {
             ) as RemoteRepository
         }
         single { ContactLogRemoteService(get()) }
-        single {
-            val moshi = Moshi.Builder().add(MoshiLocalDateAdapter()).build()
-            Retrofit.Builder()
-                .baseUrl(androidContext().getString(R.string.remote_data_url_default))
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-        }
+        single { ContactLogRemoteService.retrofitNewInstance(androidContext()) }
         single(named(applicationScope)) { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
     }
 

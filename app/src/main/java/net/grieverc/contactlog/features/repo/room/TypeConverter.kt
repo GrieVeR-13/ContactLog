@@ -5,14 +5,12 @@ import net.grieverc.contactlog.core.service.FormatterService
 import org.threeten.bp.LocalDate
 
 object DateTypeConverter {
-
     @TypeConverter
     @JvmStatic
     fun toLocalDate(dateString: String?) =
         dateString?.let {
             LocalDate.parse(it, FormatterService.C_DateTimeFormatterDefault)
         }
-
 
     @TypeConverter
     @JvmStatic

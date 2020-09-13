@@ -13,7 +13,6 @@ data class SpecialtyEntity(
     var name: String,
     var description: String
 ) {
-
     fun toModel() =
         SpecialtyModel(
             specialtyId,

@@ -22,28 +22,28 @@ object SampleData {
                 firstName = "Иван",
                 surname = "Иванов",
                 birthDate = LocalDate.now().minusYears(21),
-                specialty = spec1
+                specialtyList = listOf(spec1)
             ),
             WorkerModel(
                 id = "2",
                 firstName = "Петр",
-                surname = "Иванов",
+                surname = "Петров",
                 birthDate = LocalDate.now().minusYears(22),
-                specialty = spec1
+                specialtyList = listOf(spec1)
             ),
             WorkerModel(
                 id = "3",
-                firstName = "Петр",
-                surname = "Петров",
+                firstName = "Сергей",
+                surname = "Сергеев",
                 birthDate = LocalDate.now().minusYears(21),
-                specialty = spec2
+                specialtyList = listOf(spec2)
             ),
             WorkerModel(
                 id = "4",
-                firstName = "Иван",
-                surname = "Петров",
+                firstName = "Павел",
+                surname = "Павлов",
                 birthDate = LocalDate.now().minusYears(22),
-                specialty = spec2
+                specialtyList = listOf(spec1, spec2)
             )
         )
     }

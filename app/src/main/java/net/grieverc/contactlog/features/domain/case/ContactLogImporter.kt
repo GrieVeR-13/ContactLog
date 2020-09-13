@@ -4,7 +4,6 @@ import android.util.Log
 import net.grieverc.contactlog.core.interactor.UseCase
 import net.grieverc.contactlog.features.repo.remote.RemoteRepository
 import net.grieverc.contactlog.features.repo.room.Repository
-import net.grieverc.contactlog.features.repo.room.union.SpecialtyWithWorkersUnion
 
 class ContactLogImporter(private val remoteRepository: RemoteRepository,
                          private val repository: Repository) : UseCase() {
